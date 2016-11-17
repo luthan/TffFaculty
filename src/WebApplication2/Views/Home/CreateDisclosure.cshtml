@@ -1,0 +1,376 @@
+﻿@model WebApplication2.ViewModels.DisclosureViewModel
+
+@*<style>
+    input[type=checkbox], input[type=radio]{
+        transform: scale(1);
+        -ms-transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+</style>*@
+
+<div class="row">
+    <h3>Create Disclosure</h3>
+    <div class="well">
+        <h3>
+            FINANCIAL DISCLOSURE REPORTING FORM<br />
+            FOR CONTINUING EDUCATION (CE) ACTIVITIES
+        </h3>
+        <p>Because CE activities are conducted in the public interest, it is important to assure the public that education received by physicians and other health care professionals through whom patient care decisions are made is conducted with the highest integrity, scientific objectivity and in the absence of bias. A conflict of interest exists when individuals have both a financial relationship with a commercial interest and the opportunity to affect the content of CE about the product or services of that commercial interest. The Accreditation Council for Continuing Medical Education (ACCME) and the Accreditation Council for Pharmacy Education (ACPE) hold providers of CE responsible for collecting information from its instructors, planners, reviewers and managers of CE content and resolving those conflicts prior to the commencement of planning for the CE activity and/or the development of content. The intent of the conflict of interest resolution process is to assure that provider, faculty and planner financial relationships with commercial interests and resultant loyalties do not supersede the public interest in the design and delivery of continuing education activities for the profession.</p>
+        <div class="well">
+            CRITERIA FOR DISCLOSURE OF FINANCIAL RELATIONSHIPS
+            <ul>
+                <li>
+                    Instructors, planners, faculty, content reviewers and managers who affect the content of a CE activity are required to disclose financial relationships or relationships to products or devices they have with commercial interests (i.e. any entity producing, marketing, re-selling, or distributing healthcare goods or services consumed by, or used on, patients) of any amount over the past 12 months ONLY.
+                </li>
+                <li>
+                    A commercial interest is defined as a maker or owner of a FDA-regulated drug or device (i.e., any entity producing, marketing, re-selling, or distributing health care goods or services consumed by, or used on, patients).
+                </li>
+                <li>
+                    Financial relationships with governmental agencies (e.g., the NIH) and organizations that do not fit the above definition do not have to be disclosed.
+                </li>
+                <li>
+                    Honoraria received, or consulting funds, from a CE provider, even though those funds may have been provided to that CE provider through an educational grant from a commercial interest, do not have to be disclosed.
+                </li>
+                <li>
+                    If you are a principal investigator for a clinical trial, you must report that research relationship below under "Contracted Research" even if those funds came to an institution.
+                </li>
+                <li>
+                    If your spouse or life partner has a relevant financial relationship with an applicable commercial interest (e.g., is employed as the VP-Marketing), or provides marketing advice to an applicable commercial interest as a consultant, you must include that disclosure in the table below.
+                </li>
+                <li>
+                    In accordance with ACCME and ACPE requirements, failure to provide disclosure information in a timely manner will result in the disqualification of the potential planner, activity director, instructor, moderator, faculty, presenter, reviewer or planning committee member from this activity.
+                </li>
+            </ul>
+        </div>
+        <form asp-action="CreateDisclosre" asp-controller="Home" method="post">
+            <fieldset>
+                @*<div asp-validation-summary="ValidationSummary.All"></div>*@
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label asp-for="CommercialInterest" style="font-weight:bold;font-size:14px"></label><br />
+                            <div style="margin-left:4px">
+                                <input type="radio" value="Yes" asp-for="CommercialInterest" /> - Yes &nbsp;&nbsp;
+                                <input type="radio" value="No" asp-for="CommercialInterest" /> - No
+                            </div>
+                            <br /><span asp-validation-for="CommercialInterest" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        <strong>
+                            Type of Financial Relationship
+                        </strong>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <strong>Self</strong>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <strong>Spouse/Partner</strong>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <strong>Details</strong>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        Non-CE Consulting
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="ConsultingSelf" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="ConsultingSpouse" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="ConsultingInfo" class="form-control"></textarea>
+                        <span asp-validation-for="ConsultingInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        Non-CE Speakers Bureau
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="SpeakersBureauSelf" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="SpeakersBureauSpouse" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="SpeakersBureauInfo" class="form-control"></textarea>
+                        <span asp-validation-for="SpeakersBureauInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        Contract Research
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="ContractedResearchSelf" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="ContractedResearchSpouse" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="ContractedResearchInfo" class="form-control"></textarea>
+                        <span asp-validation-for="ContractedResearchInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        Ownership Interest
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="OwnershipSelf" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="OwnershipSpouse" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="OwnershipInfo" class="form-control"></textarea>
+                        <span asp-validation-for="OwnershipInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        Receipt of Intellectual Property Rights / Patent Holder
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="IpRightsPatentSelf" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="IpRightsPatentSpouse" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="IpRightsPatentInfo" class="form-control"></textarea>
+                        <span asp-validation-for="IpRightsPatentInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        Royalty
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="RoyaltySelf" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="RoyaltySpouse" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="RoyaltyInfo" class="form-control"></textarea>
+                        <span asp-validation-for="RoyaltyInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        Salary
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="SalarySelf" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="SalarySpouse" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="SalaryInfo" class="form-control"></textarea>
+                        <span asp-validation-for="SalaryInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="OtherDescription" class="form-control" placeholder="Other (please describe)"></textarea>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="OtherSelf" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input asp-for="OtherSpouse" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <textarea asp-for="OtherInfo" class="form-control"></textarea>
+                        <span asp-validation-for="OtherInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label asp-for="WillImpactPresentation" style="font-weight:bold;font-size:14px"></label>
+                        <div style="margin-left:4px">
+                            <input type="radio" asp-for="WillImpactPresentation" value="Yes" /> - Yes &nbsp;&nbsp;
+                            <input type="radio" asp-for="WillImpactPresentation" value="No" /> - No
+                        </div>
+                        <span asp-validation-for="WillImpactPresentation" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label asp-for="UnapprovedDrugReference" style="font-weight:bold;font-size:14px"></label>
+                        <div style="margin-left:4px">
+                            <input type="radio" asp-for="UnapprovedDrugReference" value="Yes" /> - Yes &nbsp;&nbsp;
+                            <input type="radio" asp-for="UnapprovedDrugReference" value="No" /> - No &nbsp;&nbsp;
+                            <input type="radio" asp-for="UnapprovedDrugReference" value="Unsure" /> - Unsure at this time
+                        </div>
+                        <span asp-validation-for="UnapprovedDrugReference" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label asp-for="DrugList" style="font-weight:bold;font-size:14px"></label>
+                        <input asp-for="DrugList" class="form-control" />
+                        <span asp-validation-for="DrugList" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label asp-for="DisclosedAllRelevantRelationships" style="font-weight:bold;font-size:14px"></label><br />
+                        <div style="margin-left:4px">
+                            <input type="radio" asp-for="DisclosedAllRelevantRelationships" value="Yes" /> - Yes &nbsp;&nbsp;
+                            <input type="radio" asp-for="DisclosedAllRelevantRelationships" value="No" /> - No
+                        </div>
+                        <span asp-validation-for="DisclosedAllRelevantRelationships" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label asp-for="SignatureConfirm" style="font-weight:bold;font-size:14px"></label>
+                        <div style="margin-left:4px">
+                            <input asp-for="SignatureConfirm" />&nbsp; - I Confirm
+                        </div>
+                        <span asp-validation-for="SignatureConfirm" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+                    
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label asp-for="SignatureText" style="font-weight:bold;font-size:14px"></label>
+                        <input asp-for="SignatureText" style="text-transform:uppercase" class="form-control" />
+                        <span asp-validation-for="SignatureText" class="text-danger"></span>
+                    </div>
+
+           
+                    <div class="col-sm-6">
+                        <label asp-for="SignatureDate" style="font-weight:bold;font-size:14px"></label>
+                        <input asp-for="SignatureDate" style="text-transform:uppercase" class="form-control" readonly />
+                        <span asp-validation-for="SignatureDate" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="submit" class="btn btn-success" value="Create Disclosure" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model WebApplication2.ViewModels.CreateUserViewModel
+
+<h3>Create Faculty</h3>
+
+<div class="well">
+    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+    <form asp-controller="Admin" asp-action="CreateFaculty" method="post">
+        <fieldset>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <input type="submit" value="Create Faculty" class="btn btn-success" />
+                <a asp-controller="Admin" asp-action="Faculty" class="btn btn-danger">Cancel</a>
+            </div>
+        </fieldset>
+    </form>
+</div>

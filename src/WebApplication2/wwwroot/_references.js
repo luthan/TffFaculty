@@ -1,0 +1,16 @@
+﻿/// <autosync enabled="true" />
+/// <reference path="../gulpfile.js" />
+/// <reference path="js/admin/createevent.js" />
+/// <reference path="js/Admin/EventDetails.js" />
+/// <reference path="js/admin/eventfacultymanage.js" />
+/// <reference path="js/Admin/Events.js" />
+/// <reference path="js/Admin/Faculty.js" />
+/// <reference path="js/home/eventfacultymanage.js" />
+/// <reference path="js/Home/Index.js" />
+/// <reference path="js/home/index-faculty - copy.js" />
+/// <reference path="js/site.js" />
+/// <reference path="lib/bootstrap/dist/js/bootstrap.js" />
+/// <reference path="lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
+/// <reference path="lib/jquery/dist/jquery.js" />
+/// <reference path="lib/jquery-validation/dist/jquery.validate.js" />
+/// <reference path="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />

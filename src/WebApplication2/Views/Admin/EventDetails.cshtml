@@ -1,0 +1,192 @@
+﻿@model WebApplication2.ViewModels.EventViewModel
+<environment names="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap-3-datepicker/dist/css/bootstrap-datepicker.css" />
+</environment>
+<environment names="Staging,Production">
+    <link rel="stylesheet" href="~/lib/bootstrap-3-datepicker/dist/css/bootstrap-datepicker.min.css" />
+</environment>
+<style>
+    .datepicker {
+        z-index: 10000 !important;
+    }
+</style>
+<div class="row" id="app">
+    <h3>Event Details</h3>
+    <div class="well">
+        <form asp-controller="Admin" asp-action="EventDetails" method="post">
+            <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+            <fieldset>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="EventCode"></label>
+                            <input asp-for="EventCode" class="form-control" />
+                            <span asp-validation-for="EventCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label asp-for="EventName"></label>
+                            <input asp-for="EventName" class="form-control" />
+                            <span asp-validation-for="EventName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="EventStartDate"></label>
+                            <input asp-for="EventStartDate" class="form-control" />
+                            <span asp-validation-for="EventStartDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="EventEndDate"></label>
+                            <input asp-for="EventEndDate" class="form-control" />
+                            <span asp-validation-for="EventEndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-6">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-success @(Model.Type == "Live" ? "active" : "")" v-on:click="type = 'Live'">
+                                <input type="radio" value="Live" v-model="type" asp-for="Type"> Live
+                            </label>
+                            <label class="btn btn-success @(Model.Type == "Enduring" ? "active" : "")" v-on:click="type = 'Enduring'">
+                                <input type="radio" value="Enduring" v-model="type" asp-for="Type"> Enduring
+                            </label>
+                            <label class="btn btn-success @(Model.Type == "Live/Enduring" ? "active" : "")" v-on:click="type = 'Live/Enduring'">
+                                <input type="radio" value="Live/Enduring" v-model="type" asp-for="Type"> Live/Enduring
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label asp-for="VenueName"></label>
+                            <input asp-for="VenueName" class="form-control" v-model="venueName" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="VenueName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="VenueAddress1"></label>
+                            <input asp-for="VenueAddress1" class="form-control" v-model="address1" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="VenueAddress1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="VenueAddress2"></label>
+                            <input asp-for="VenueAddress2" class="form-control" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="VenueAddress2" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="VenueCity"></label>
+                            <input asp-for="VenueCity" class="form-control" v-model="city" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="VenueCity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="VenueState"></label>
+                            <select asp-for="VenueState" asp-items="@ViewBag.states" class="form-control" v-bind:disabled="type == 'Enduring'"><option value="">-- Select State --</option></select>
+                            <span asp-validation-for="VenueState" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="VenueZip"></label>
+                            <input asp-for="VenueZip" class="form-control" v-model="zip" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="VenueZip" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="HotelBlockCode"></label>
+                            <input asp-for="HotelBlockCode" class="form-control" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="HotelBlockCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="ArriveHoursBefore"></label>
+                            <input asp-for="ArriveHoursBefore" class="form-control" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="ArriveHoursBefore" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="DepartHoursAfter"></label>
+                            <input asp-for="DepartHoursAfter" class="form-control" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="DepartHoursAfter" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="HotelAllowance"></label>
+                            <input asp-for="HotelAllowance" class="form-control" v-model="hotelAllowance" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="HotelAllowance" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="AirfareTrainAllowance"></label>
+                            <input asp-for="AirfareTrainAllowance" class="form-control" v-model="airfareAllowance" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="AirfareTrainAllowance" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="GroundTransfersAllowance"></label>
+                            <input asp-for="GroundTransfersAllowance" class="form-control" v-model="groundTransportAllowance" v-bind:disabled="type == 'Enduring'" />
+                            <span asp-validation-for="GroundTransfersAllowance" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <input type="submit" value="Update Event" class="btn btn-success" v-bind:disabled="validForm != 0" />
+                            <a asp-action="Events" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+<environment names="Development">
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/lib/vue/dist/vue.js"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/vue/dist/vue.min.js"></script>
+</environment>
+<script src="~/js/Admin/EventDetails.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#EventStartDate, #EventEndDate").datepicker();
+        });
+    </script>
+}

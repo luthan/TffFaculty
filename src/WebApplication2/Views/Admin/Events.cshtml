@@ -1,0 +1,77 @@
+﻿<link rel="stylesheet" href="~/lib/Font-Awesome/css/font-awesome.css" />
+
+<h3>Events</h3>
+
+<div id="app">
+
+    <div class="row">
+        @if (!User.IsInRole("SuperAdmin"))
+        {
+            <div class="col-md-2"><a asp-action="CreateEvent" asp-controller="Admin" class="btn btn-success">Create Event</a></div>
+        }
+        <div class="col-md-6"><input type="text" v-model="searchQuery" class="form-control" placeholder="Search for Code, Name, Type" /></div>
+        <div class="col-md-4">
+            <button class="btn btn-info" v-bind:class="{active: status=='Active'}" v-on:click="status='Active'">Active</button>
+            <button class="btn btn-info" v-bind:class="{active: status=='Inactive'}" v-on:click="status='Inactive'">Inactive</button>
+            <button class="btn btn-info" v-bind:class="{active: status==''}" v-on:click="status=''">All</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Manager</th>                    
+                    <th></th>
+                </tr>
+                <tr v-for="f in filteredEvents">
+                    <td>{{f.EventStartDate | date}}</td>
+                    <td>{{f.EventEndDate | date}}</td>
+                    <td>{{f.EventCode}}</td>
+                    <td>{{f.EventName}}</td>
+                    <td>{{f.Type}}</td>
+                    <td>{{f.Manager.FirstName}} {{f.Manager.LastName}}</td>
+                    <td><a v-bind:href="'/Admin/EventDetails/'+f.Id">Manage</a> | <a v-bind:href="'/Admin/EventFaculty/'+f.Id">Faculty</a> | <a v-if="f.Status == 'Active'" v-bind:href="'/Admin/DeactivateEvent/'+f.Id">Deactivate</a><a v-else v-bind:href="'/Admin/ActivateEvent/'+f.Id">Activate</a></td>
+                </tr>
+            </table>            
+        </div>       
+    </div>
+    @*<div class="row">
+        <div class="col-md-12">
+            <div v-if="filteredEvents.length > 0">
+                <div v-for="f in filteredEvents">
+                    <div>{{f}}</div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+
+
+
+@section scripts{
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.min.js" integrity="sha256-HGV3LcrrHFFi+8L71R2WxfVzKUwvYSorfbhpBnBSdeI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js" integrity="sha256-lDcU9wi187tvmD2D2AvfRvhuVthZ5UxIP7Oh+Rk3yNw=" crossorigin="anonymous"></script>
+<environment names="Development">
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/lib/vue/dist/vue.js"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/vue/dist/vue.min.js"></script>
+</environment>
+
+
+<script src="~/js/Admin/Events.js"></script>
+
+}

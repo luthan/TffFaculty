@@ -1,0 +1,325 @@
+﻿@model WebApplication2.ViewModels.FacultyProfileViewModel
+<environment names="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap-3-datepicker/dist/css/bootstrap-datepicker.css" />
+</environment>
+<environment names="Staging,Production">
+    <link rel="stylesheet" href="~/lib/bootstrap-3-datepicker/dist/css/bootstrap-datepicker.min.css" />
+</environment>
+
+<style>
+    .datepicker {
+        z-index: 10000 !important;
+    }
+</style>
+
+<h3>Profile</h3>
+
+<div class="col-sm-12">
+    <form asp-action="Profile" method="post">
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+        <fieldset>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserName" />
+            <div class="well">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label><span class="requiredStar">*</span> indicates a required field</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label asp-for="Prefix"></label>
+                            <input asp-for="Prefix" class="form-control" />
+                            <span asp-validation-for="Prefix" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label> <span class="requiredStar">*</span>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label asp-for="LastName"></label> <span class="requiredStar">*</span>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="Degree"></label>
+                            <input asp-for="Degree" class="form-control" />
+                            <span asp-validation-for="Degree" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="Specialty"></label> <span class="requiredStar">*</span>
+                            <select asp-for="Specialty" asp-items="@ViewBag.specialties" class="form-control"><option value="">-- Select Specialty --</option></select>
+                            <span asp-validation-for="Specialty" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="Affiliation"></label> <span class="requiredStar">*</span>
+                            <input asp-for="Affiliation" class="form-control" />
+                            <span asp-validation-for="Affiliation" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @*<div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="UserName"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>*@
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="BusinessPhone"></label> <span class="requiredStar">*</span>
+                            <input asp-for="BusinessPhone" class="form-control" />
+                            <span asp-validation-for="BusinessPhone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="MobilePhone"></label>
+                            <input asp-for="MobilePhone" class="form-control" />
+                            <span asp-validation-for="MobilePhone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="Fax"></label>
+                            <input asp-for="Fax" class="form-control" />
+                            <span asp-validation-for="Fax" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="AssistanName"></label>
+                            <input asp-for="AssistanName" class="form-control" />
+                            <span asp-validation-for="AssistanName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="AssistantEmail"></label>
+                            <input asp-for="AssistantEmail" class="form-control" />
+                            <span asp-validation-for="AssistantEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label asp-for="AssistantPhone"></label>
+                            <input asp-for="AssistantPhone" class="form-control" />
+                            <span asp-validation-for="AssistantPhone" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label asp-for="StreetAddress"></label> <span class="requiredStar">*</span>
+                            <input asp-for="StreetAddress" class="form-control" />
+                            <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label asp-for="City"></label> <span class="requiredStar">*</span>
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label asp-for="State"></label> <span class="requiredStar">*</span>
+                            <select asp-for="State" asp-items="@ViewBag.states" class="form-control" v-bind:disabled="type == 'Enduring'"><option value="">-- Select State --</option></select>
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label asp-for="Zip"></label> <span class="requiredStar">*</span>
+                            <input asp-for="Zip" class="form-control" />
+                            <span asp-validation-for="Zip" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label asp-for="Country"></label> <span class="requiredStar">*</span>
+                            <select asp-for="Country" asp-items="@ViewBag.countries" class="form-control"><option value="">-- Select Country --</option></select>
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <h3>Travel Profile</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="OfficialName"></label> <span class="requiredStar">*</span>
+                            <input asp-for="OfficialName" class="form-control" />
+                            <span asp-validation-for="OfficialName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="BirthDate"></label> <span class="requiredStar">*</span>
+                            <input asp-for="BirthDate" class="form-control" />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Hotel1Name"></label>
+                            <input asp-for="Hotel1Name" class="form-control" />
+                            <span asp-validation-for="Hotel1Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Hotel1MemberNumber"></label>
+                            <input asp-for="Hotel1MemberNumber" class="form-control" />
+                            <span asp-validation-for="Hotel1MemberNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Hotel2Name"></label>
+                            <input asp-for="Hotel2Name" class="form-control" />
+                            <span asp-validation-for="Hotel2Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Hotel2MemberNumber"></label>
+                            <input asp-for="Hotel2MemberNumber" class="form-control" />
+                            <span asp-validation-for="Hotel2MemberNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label asp-for="HotelRoomPreference"></label>
+                            <input asp-for="HotelRoomPreference" class="form-control" />
+                            <span asp-validation-for="HotelRoomPreference" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="PreferredAirport"></label>
+                    <input asp-for="PreferredAirport" class="form-control" />
+                    <span asp-validation-for="PreferredAirport" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="PreferredTrainStation"></label>
+                    <input asp-for="PreferredTrainStation" class="form-control" />
+                    <span asp-validation-for="PreferredTrainStation" class="text-danger"></span>
+                </div>
+            </div>
+        </div>*@
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Airlinel1Name"></label>
+                            <input asp-for="Airlinel1Name" class="form-control" />
+                            <span asp-validation-for="Airlinel1Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Airline1MemberNumber"></label>
+                            <input asp-for="Airline1MemberNumber" class="form-control" />
+                            <span asp-validation-for="Airline1MemberNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Airline2Name"></label>
+                            <input asp-for="Airline2Name" class="form-control" />
+                            <span asp-validation-for="Airline2Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Airline2MemberNumber"></label>
+                            <input asp-for="Airline2MemberNumber" class="form-control" />
+                            <span asp-validation-for="Airline2MemberNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label asp-for="AirlineSeatingPreference"></label>
+                            <input asp-for="AirlineSeatingPreference" class="form-control" />
+                            <span asp-validation-for="AirlineSeatingPreference" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="PreferredCarRentalCompany"></label>
+                    <input asp-for="PreferredCarRentalCompany" class="form-control" />
+                    <span asp-validation-for="PreferredCarRentalCompany" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="CarRentalCompanyMemberNumber"></label>
+                    <input asp-for="CarRentalCompanyMemberNumber" class="form-control" />
+                    <span asp-validation-for="CarRentalCompanyMemberNumber" class="text-danger"></span>
+                </div>
+            </div>
+        </div>*@
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="submit" value="Update Profile" class="btn btn-success btn-block" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+@section scripts{
+    <environment names="Development">
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    </environment>
+
+    <script>
+        $(document).ready(function () {
+            $("#BirthDate").datepicker();
+        });
+    </script>
+}

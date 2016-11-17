@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebApplication2.ViewModels.EventViewModel>
+<link rel="stylesheet" href="~/lib/Font-Awesome/css/font-awesome.css" />
+
+<h3>Events</h3>
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group">
+            <a asp-action="CreateEvent" asp-controller="Admin"><li class="list-group-item list-group-item-text"><i class="fa fa-plus" style="color:green"></i> <strong>Create New Event</strong></li></a>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        @foreach (var c in (List<StatusCode>)ViewBag.StatusCodes)
+        {
+            <a class="btn btn-info" href="/Admin/Events?statusCode=@c.Name">@c.Name</a>
+        }
+        <a class="btn btn-info" href="/Admin/Events?statusCode=All">All</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <tr><th>Start Date</th><th>End Date</th><th>Event Code</th><th>Event Name</th><th></th></tr>
+            @foreach (var mv in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m=>mv.EventStartDate)</td>
+                    <td>@Html.DisplayFor(m=>mv.EventEndDate)</td>
+                    <td>@mv.EventCode</td>
+                    <td>@mv.EventName</td>
+                    <td>
+                        <a asp-controller="Admin" asp-action="EventDetails" asp-route-id="@mv.Id">Edit</a> |
+                        <a asp-action="EventFaculty" asp-route-id="@mv.Id">Faculty</a> |
+                        @if (mv.Status == "Active")
+                        {
+                            <a asp-action="DeactivateEvent" asp-route-id="@mv.Id">Deactivate</a>
+                        }
+                        else
+                        {
+                            <a asp-action="ActivateEvent" asp-route-id="@mv.Id">Activate</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

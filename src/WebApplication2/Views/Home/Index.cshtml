@@ -1,0 +1,220 @@
+﻿@model WebApplication2.ViewModels.FacultyProfileViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/lib/Font-Awesome/css/font-awesome.css" />
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Hello, @(string.IsNullOrWhiteSpace(Model.FirstName) ? "Faculty!" : @Model.FirstName)</h2>
+        <p class="text-danger">@ViewBag.Message</p>        
+    </div>
+</div>
+<div id="app">
+
+    @if (User.IsInRole("Faculty"))
+    {
+        <div class="row">
+            <div class="col-md-12"><p>Welcome to the France Foundation online database! This site is for those who have agreed to serve as faculty for our educational CME programs.Please use the log in information emailed to you to log in to your account.You will then have access to the details of your program as well as any forms that need to be filled out and returned.Thank you.</p></div>
+            <div class="col-md-6">
+                <h3>Your Status</h3>
+                <ul class="list-group">
+
+                    @if (!Model.TravelProfileComplete())
+                {
+                        <li class="list-group-item list-group-item-danger"><span class="text-danger"><i class="fa fa-exclamation-circle"></i></span> &nbsp;&nbsp;<strong><a asp-action="Profile">Travel Profile - TO DO</a></strong></li>
+                    }
+                    else
+                    {
+                        <li class="list-group-item list-group-item-success"><span class="text-success"><i class="fa fa-check"></i></span> &nbsp;&nbsp;<strong><a asp-action="Profile">Travel Profile - COMPLETED</a></strong></li>
+                    }
+                    @if (!Model.DisclosureUpToDate())
+                {
+                        <li class="list-group-item list-group-item-danger"><span class="text-danger"><i class="fa fa-exclamation-circle"></i></span> &nbsp;&nbsp;<strong><a asp-action="CreateDisclosure">Disclosure Form - TO DO</a></strong></li>
+                    }
+                    else
+                    {
+                        <li class="list-group-item list-group-item-success"><span class="text-success"><i class="fa fa-check"></i></span> &nbsp;&nbsp;<strong><a asp-action="UpdateDisclosure">Disclosure Forum - COMPLETED</a></strong></li>
+                    }
+                    <li class="list-group-item list-group-item-info"><span class="text-primary"><i class="fa fa-key"></i></span> &nbsp;&nbsp;<strong><a asp-action="ChangePassword" asp-controller="Manage">Change Your Password</a></strong></li>
+
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Your Activities</h3>
+                <ul class="list-group">
+                    @foreach (var userEvent in Model.EventFaculty)
+                {
+
+
+                    if (!userEvent.FilledOut)
+                    {
+                            <li class="list-group-item list-group-item-danger"><span class="text-danger"><i class="fa fa-exclamation-circle"></i></span> &nbsp;&nbsp;<strong><a asp-action="EventFacultyManage" asp-route-id="@userEvent.Id">@userEvent.Event.EventName - TO DO</a></strong></li>
+                        }
+                        else
+                        {
+                            <li class="list-group-item list-group-item-success"><span class="text-info"><i class="fa fa-check"></i></span> &nbsp;&nbsp;<strong><a asp-action="EventFacultyManage" asp-route-id="@userEvent.Id">@userEvent.Event.EventName - COMPLETED</a></strong></li>
+                        }
+
+                    }
+                </ul>
+                <br />
+            </div>
+            <div class="col-md-12">
+
+                <h3>Quick Profile</h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label asp-for="FirstName"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.FirstName" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="LastName"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.LastName" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Degree"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.Degree" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Affiliation"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.Affiliation" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <label asp-for="StreetAddress"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.StreetAddress" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3">
+                        <label asp-for="City"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.City" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="State"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.State" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Zip"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.Zip" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Country"></label> <span class="requiredStar">*</span>
+                        <select class="form-control" v-model="profile.Country">
+                            <option value="">-- Select Country --</option>
+                            <option v-for="c in countries" v-bind:value="c">{{c}}</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3">
+                        <label asp-for="BusinessPhone"></label> <span class="requiredStar">*</span>
+                        <input type="text" class="form-control" v-model="profile.BusinessPhone" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-success" v-bind:disabled="!validForm" v-on:click="submitForm">Update Profile</button>&nbsp;&nbsp;<span v-if="!validForm" class="text-danger">All fields are required.</span><i class="fa fa-spinner fa-spin fa-fw" v-if="saving"></i><span v-if="saving" class="sr-only">Saving...</span>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    }
+    @if (User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-info"><span class="text-primary"><i class="fa fa-key"></i></span> &nbsp;&nbsp;<strong><a asp-action="ChangePassword" asp-controller="Manage">Change Your Password</a></strong></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <h3>Your Events</h3>
+            </div>
+
+
+            <div class="col-md-2"><a asp-action="CreateEvent" asp-controller="Admin" class="btn btn-success">Create Event</a></div>
+            <div class="col-md-6"><input type="text" v-model="searchQuery" class="form-control" placeholder="Search for Code, Name, Type" /></div>
+            <div class="col-md-4">
+                <button class="btn btn-info" v-bind:class="{active: status=='Active'}" v-on:click="status='Active'">Active</button>
+                <button class="btn btn-info" v-bind:class="{active: status=='Inactive'}" v-on:click="status='Inactive'">Inactive</button>
+                <button class="btn btn-info" v-bind:class="{active: status==''}" v-on:click="status=''">All</button>
+            </div>
+            <div class="col-md-12">
+                <br />
+                <table class="table">
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th></th>
+                    </tr>
+                    <tr v-for="f in filteredEvents">
+                        <td>{{f.EventStartDate | date}}</td>
+                        <td>{{f.EventEndDate | date}}</td>
+                        <td>{{f.EventCode}}</td>
+                        <td>{{f.EventName}}</td>
+                        <td>{{f.Type}}</td>
+                        <td><a v-bind:href="'/Admin/EventDetails/'+f.Id">Manage</a> | <a v-bind:href="'/Admin/EventFaculty/'+f.Id">Faculty</a> | <a v-if="f.Status == 'Active'" v-bind:href="'/Admin/DeactivateEvent/'+f.Id">Deactivate</a><a v-else v-bind:href="'/Admin/ActivateEvent/'+f.Id">Activate</a></td>
+                    </tr>
+                </table>
+            </div>
+            
+
+                </div>
+    }
+
+    @if (User.IsInRole("SuperAdmin"))
+    {
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-info">
+                <span class="text-primary"><i class="fa fa-key"></i></span> &nbsp;&nbsp;<strong><a asp-action="ChangePassword" asp-controller="Manage">Change Your Password</a></strong>
+            </li>
+        </ul>
+    }
+    </div>
+
+
+
+
+    @section scripts{
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.min.js" integrity="sha256-HGV3LcrrHFFi+8L71R2WxfVzKUwvYSorfbhpBnBSdeI=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js" integrity="sha256-lDcU9wi187tvmD2D2AvfRvhuVthZ5UxIP7Oh+Rk3yNw=" crossorigin="anonymous"></script>
+        <environment names="Development">
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+            <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+            <script src="~/lib/vue/dist/vue.js"></script>
+        </environment>
+        <environment names="Staging,Production">
+            <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+            <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+            <script src="~/lib/vue/dist/vue.min.js"></script>
+        </environment>
+        <script>
+            var userId = "@Model.Id";
+        </script>
+        @if (User.IsInRole("Faculty"))
+        {
+            <script src="~/js/Home/IndexFaculty.js"></script>
+        }
+        @if (User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
+        {
+            <script src="~/js/Home/IndexAdmin.js"></script>
+        }
+
+
+    }

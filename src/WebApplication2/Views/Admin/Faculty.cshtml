@@ -1,0 +1,67 @@
+﻿<link rel="stylesheet" href="~/lib/Font-Awesome/css/font-awesome.css" />
+
+<h3>Faculty</h3>
+
+<div id="app">
+
+    <div class="row">
+        <div class="col-md-2"><a asp-action="CreateFaculty" asp-controller="Admin" class="btn btn-success">Create Faculty</a></div>
+        <div class="col-md-6"><input type="text" v-model="searchQuery" class="form-control" placeholder="Search for First Name, Last Name, Specialty" /></div>
+        <div class="col-md-4">
+            <button class="btn btn-info" v-bind:class="{active: status=='Active'}" v-on:click="status='Active'">Active</button>
+            <button class="btn btn-info" v-bind:class="{active: status=='Inactive'}" v-on:click="status='Inactive'">Inactive</button>
+            <button class="btn btn-info" v-bind:class="{active: status==''}" v-on:click="status=''">All</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th class="text-center">Complete Profile</th>
+                    <th class="text-center">Disclosure</th>
+                    <th></th>
+                </tr>
+                <tr v-for="f in filteredUsers">
+                    <td>{{f.LastName}}, {{f.FirstName}}</td>
+                    <td class="text-center"><div v-if="!f.ProfileComplete"><i class="fa fa-exclamation-circle text-danger"></i></div></td>
+                    <td class="text-center"><div v-if="!f.DisclosureComplete"><i class="fa fa-exclamation-circle text-danger"></i></div></td>
+                    <td><a v-bind:href="'/Admin/EditFaculty/'+f.Id">Manage</a> | <a v-if="f.Status == 'Active'" v-bind:href="'/Admin/DeactivateUser/'+f.Id">Deactivate</a><a v-else v-bind:href="'/Admin/ActivateUser/'+f.Id">Activate</a></td>
+                </tr>
+            </table>            
+        </div>       
+    </div>
+    @*<div class="row">
+        <div class="col-md-12">
+            <div v-if="filteredUsers.length > 0">
+                <div v-for="f in filteredUsers">
+                    <div>{{f}}</div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+
+
+
+@section scripts{
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.min.js" integrity="sha256-HGV3LcrrHFFi+8L71R2WxfVzKUwvYSorfbhpBnBSdeI=" crossorigin="anonymous"></script>
+<environment names="Development">
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/lib/vue/dist/vue.js"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/vue/dist/vue.min.js"></script>
+</environment>
+
+
+<script src="~/js/Admin/Faculty.js"></script>
+
+}

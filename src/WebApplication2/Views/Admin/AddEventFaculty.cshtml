@@ -1,0 +1,21 @@
+﻿@model WebApplication2.ViewModels.AdminAddFactultyToEventViewModel
+
+<h3>Add Event Faculty - @Model.Event.EventName</h3>
+@Model.Id
+<div class="row">
+    <form method="post" asp-action="AddEventFaculty">
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+        <input type="hidden" asp-for="@Model.EventId" />
+        <input type="hidden" asp-for="@Model.Id" />
+        <div class="col-md-12">
+            <div class="form-group">
+                <select asp-for="UserId" asp-items="ViewBag.userSelect" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="submit" value="Add faculty" class="btn btn-success" />
+            </div>
+        </div>
+    </form>
+</div>

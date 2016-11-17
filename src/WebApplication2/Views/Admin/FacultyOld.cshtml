@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebApplication2.ViewModels.FacultyProfileViewModel>
+<link rel="stylesheet" href="~/lib/Font-Awesome/css/font-awesome.css" />
+
+<h3>Faculty</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group">
+            <a asp-action="CreateFaculty" asp-controller="Admin"><li class="list-group-item list-group-item-text"><i class="fa fa-plus" style="color:green"></i> <strong>Create Faculty</strong></li></a>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        @foreach (var c in (List<StatusCode>)ViewBag.StatusCodes)
+        {
+            <a class="btn btn-info" href="/Admin/Faculty?statusCode=@c.Name">@c.Name</a>
+        }
+        <a class="btn btn-info" href="/Admin/Faculty?statusCode=All">All</a>
+    </div>
+</div>
+<div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Complete Profile</th>
+                <th class="text-center">Disclosure</th>
+                <th></th>
+            </tr>
+            @foreach (var u in Model)
+            {
+                <tr>
+                    <td class="text-center">@u.LastName, @u.FirstName</td>
+                    <td class="text-center">
+                        @if (!u.TravelProfileComplete())
+                        {
+                            <span class="text-danger"><i class="fa fa-exclamation-circle"></i></span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (!u.DisclosureUpToDate())
+                        {
+                            <span class="text-danger"><i class="fa fa-exclamation-circle"></i></span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="EditFaculty" asp-route-id="@u.Id">Manage</a> | 
+                    
+                    @if (u.Status == "Active")
+                    {
+                        <a asp-action="DeactivateUser" asp-route-id="@u.Id">Deactivate</a>
+                    }
+                    else
+                    {
+                        <a asp-action="ActivateUser" asp-route-id="@u.Id">Activate</a>
+                    }
+                        </td>
+                    
+                </tr>
+
+            }
+        </table>
+    </div>
+</div>
+
+
+@section scripts{
+    
+}

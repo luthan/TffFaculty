@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WebApplication2.Models.FacultyRole>
+
+<h3>Faculty Roles</h3>
+
+<div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group">
+            @foreach (var role in Model)
+            {
+                <li class="list-group-item list-group-item-text">
+                    <div class="row">
+                        <div class="col-md-6 text-left left"><strong>@role.Name</strong></div>
+                        <div class="col-md-6 text-right right"><strong>Edit</strong></div>
+                    </div>
+                </li><br />
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddFacultyRole" asp-controller="Admin" method="post">
+            <div class="form-group">
+                <input name="name" class="form-control" />
+            </div>
+            <input type="submit" value="Add Role" class="btn btn-success" />
+        </form>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<WebApplication2.ViewModels.AdminProfileViewModel>
+
+<style>
+    .green{
+        color: green
+    }
+</style>
+<h3>Admins</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-text"><i class="fa fa-plus" style="color:green"></i><a asp-action="CreateAdmin" asp-controller="Admin"><strong>Create Admin</strong></a></li>
+        </ul>
+    </div>
+</div>
+<link rel="stylesheet" href="~/lib/Font-Awesome/css/font-awesome.css" />
+<div class="row">
+    <div class="col-md-12">
+        <span class="fa fa-user-plus" style="color:green"></span> Indicates Super Administrator<br /><br />
+        <table class="table table-striped">
+            <tr>
+                <th class="text-center">Name</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var u in Model)
+            {
+                <tr>
+                   <td class="text-center">
+                    @if (u.SuperAdmin) {<span class="fa fa-user-plus" style="color:green">&nbsp;</span>} else { <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> }@u.LastName, @u.FirstName</td>
+
+                    
+                    <td class="text-center"><a href="@Url.Action("EditAdmin",new { Id = u.Id })">Manage</a></td>
+                    @if (u.UserName != User.Identity.Name)
+                    {
+                        <td class="text-center"><a href="@Url.Action("DeleteAdmin", new { Id = u.Id })">Delete</a></td>
+                    } else
+                    {
+                        <td></td>
+                    }
+
+                </tr>
+
+            }
+        </table>
+    </div>
+</div>
+
+
+@section scripts{
+    
+}

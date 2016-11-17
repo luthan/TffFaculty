@@ -1,0 +1,19 @@
+﻿<h3>Administration</h3>
+
+<ul class="list-group">
+    <a asp-action="Events" asp-controller="Admin"><li class="list-group-item list-group-item-text"><strong>Events</strong></li></a>
+    <br />
+    <a asp-action="Faculty" asp-controller="Admin"><li class="list-group-item list-group-item-text"><strong>Faculty</strong></li></a>
+</ul>
+
+@if (User.IsInRole("SuperAdmin"))
+{
+    <h3>Super Administration</h3>
+    <ul class="list-group">
+        <a asp-action="FacultyRoles" asp-controller="Admin"><li class="list-group-item list-group-item-text"><strong>Faculty Roles</strong></li></a>
+        <br />
+        <a asp-action="Specialties" asp-controller="Admin"><li class="list-group-item list-group-item-text"><strong>Specialties</strong></li></a>
+        <br />
+        <a asp-action="Admins" asp-controller="Admin"><li class="list-group-item list-group-item-text"><strong>Admins</strong></li></a>
+    </ul>
+}

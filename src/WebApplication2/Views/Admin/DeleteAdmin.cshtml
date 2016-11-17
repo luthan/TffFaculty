@@ -1,0 +1,14 @@
+﻿@model WebApplication2.ViewModels.AdminDeleteViewModel
+
+<h3>Admin Delete Confirmation</h3>
+
+<link rel="stylesheet" href="~/lib/Font-Awesome/css/font-awesome.css" />
+<form asp-action="Profile" method="post">
+    <div class="row">
+        <div class="col-md-12">
+            Are you sure you want to delete admin user:<br /><br />
+            @Model.FirstName @Model.LastName<br /><br />
+            <button class="btn btn-success" type="submit">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a asp-action="Admins" class="btn btn-danger">Cancel</a>
+        </div>
+    </div>
+</form>
